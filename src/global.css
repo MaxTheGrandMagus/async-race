@@ -1,0 +1,80 @@
+body {
+  color: #000;
+  background-image: linear-gradient( 90.5deg,  rgba(255,207,139,0.50) 1.1%, rgba(255,207,139,1) 81.3% );
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+header h1 {
+  font-size: 40px;
+  font-weight: 800;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 100px;
+  padding: 10px 30px;
+}
+
+footer {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+footer a {
+  filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(74deg) brightness(107%) contrast(105%);
+  transition: all 0.2s ease-in-out;
+}
+
+footer a:hover {
+  filter: invert(81%) sepia(58%) saturate(1961%) hue-rotate(170deg) brightness(102%) contrast(102%);
+}
+
+footer .copyright {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+footer .copyright a {
+  color: #444;
+}
+
+footer .copyright a:hover {
+  color: #555;
+}
+
+footer .copyright:before {
+  content: '©';
+}
+
+footer .course-url {
+  display: flex;
+}
+
+footer .course-url img {
+  width: 100px;
+}
+
+footer .author-url {
+  display: flex;
+}
+
+footer .author-url img {
+  width: 38px;
+}
