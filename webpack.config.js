@@ -26,6 +26,10 @@ const baseConfig = {
         test: /\.(woff(2)?|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
     ],
   },
   resolve: {
@@ -33,7 +37,7 @@ const baseConfig = {
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/[hash].[ext]',
   },
   plugins: [

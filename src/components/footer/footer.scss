@@ -1,0 +1,40 @@
+.footer {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+  & > a {
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(74deg) brightness(107%) contrast(105%);
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      filter: invert(81%) sepia(58%) saturate(1961%) hue-rotate(170deg) brightness(102%) contrast(102%);
+    }
+  }
+  & > .copyright {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    & > a {
+      color: #444;
+      &:hover {
+        color: #555;
+      }
+    }
+    &:before {
+      content: '©';
+    }
+  }
+  & > .course-url {
+    display: flex;
+    img {
+      width: 100px;
+    }
+  }
+  & > .author-url {
+    display: flex;
+    img {
+      width: 38px;
+    }
+  }
+}
