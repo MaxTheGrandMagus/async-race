@@ -1,26 +1,31 @@
+import { Button } from '../button/button';
 import './header.scss';
 
 export class Header {
   element: HTMLElement;
 
+  private readonly garageButton: Button;
+  private readonly winnersButton: Button;
+
   constructor() {
     this.element = document.createElement('header');
     this.element.classList.add('header');
-    this.element.innerHTML = `
-      <nav>
-        <ul class="header__nav">
-          <li>
-            <a class="header__items" href="#garage">
-              <p class="header__text">To Garage</p>
-            </a>
-          </li>
-          <li>
-            <a class="header__items" href="#winners">
-              <p class="header__text">To Winners</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    `;
+
+    this.garageButton = new Button('to garage');
+    this.winnersButton = new Button('to winners');
+    this.element.appendChild(this.garageButton.element);
+    this.element.appendChild(this.winnersButton.element);
+    this.garageButton.element.addEventListener('click', () => {
+      const garageView = document.querySelector('.garage-view') as HTMLElement;
+      const winnersView = document.querySelector('.winners-view') as HTMLElement;
+      garageView.style.display = 'block';
+      winnersView.style.display = 'none';
+    });
+    this.winnersButton.element.addEventListener('click', () => {
+      const garageView = document.querySelector('.garage-view') as HTMLElement;
+      const winnersView = document.querySelector('.winners-view') as HTMLElement;
+      garageView.style.display = 'none';
+      winnersView.style.display = 'block';
+    });
   }
 }
