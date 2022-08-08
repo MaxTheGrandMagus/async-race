@@ -5,8 +5,11 @@ import { Winners } from './views/winners/winners';
 
 export class App {
   private readonly header: Header;
+
   private readonly garage: Garage;
+
   private readonly winners: Winners;
+
   private readonly footer: Footer;
 
   constructor(private readonly rootElement: HTMLElement) {

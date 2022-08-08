@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { CarImage } from '../../../utils/car-image/car-image';
 import { WinnerCar } from '../../../types';
 import './winners-item.scss';
@@ -7,9 +6,13 @@ export class WinnersItem {
   element: HTMLTableRowElement;
 
   idElement: HTMLTableCellElement;
+
   carElement: HTMLTableCellElement;
+
   nameElement: HTMLTableCellElement;
+
   winsElement: HTMLTableCellElement;
+
   timeElement: HTMLTableCellElement;
 
   public winner: WinnerCar | undefined;

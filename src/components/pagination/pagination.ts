@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Button } from '../base-components/button/button';
 
 import './pagination.scss';
@@ -7,8 +6,11 @@ export class Pagination {
   element: HTMLElement;
 
   private page = 1;
+
   private title: HTMLElement;
+
   prevPageButton: Button;
+
   nextPageButton: Button;
 
   updatePage: (page: number) => void = () => {};
@@ -28,7 +30,10 @@ export class Pagination {
     this.nextPageButton.element.onclick = () => this.switchPage('next');
 
     // append to parent
-    this.appendToParent(this.element, [this.title, this.prevPageButton.element, this.nextPageButton.element]);
+    this.appendToParent(
+      this.element,
+      [this.title, this.prevPageButton.element, this.nextPageButton.element],
+    );
   }
 
   updateNextButton(page: number, totalCount: number, limit: number) {
@@ -49,9 +54,9 @@ export class Pagination {
 
   private switchPage(type: string) {
     if (type === 'prev') {
-      if (this.page > 1) this.page--;
+      if (this.page > 1) this.page -= 1;
     }
-    if (type === 'next') this.page++;
+    if (type === 'next') this.page += 1;
     this.title.textContent = `Page #${this.page}`;
     this.updatePage(this.page);
     this.updatePrevButton();

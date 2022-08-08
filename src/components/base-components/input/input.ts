@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { HTMLAttributes } from '../../../types';
 import './input.scss';
 

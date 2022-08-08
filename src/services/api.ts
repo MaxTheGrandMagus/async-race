@@ -1,4 +1,6 @@
-import { Car, Cars, Engine, DriveStatus, Winner, Winners } from '../types';
+import {
+  Car, Cars, Engine, DriveStatus, Winner, Winners,
+} from '../types';
 
 const BASE_URL = 'http://127.0.0.1:3000';
 
@@ -22,7 +24,7 @@ const getCars = async (page = 1, limit = 7): Promise<Cars> => {
 
 const getCar = async (id: number): Promise<Car> => {
   try {
-    return (await fetch(`${GARAGE_URL}/${id}`)).json();
+    return await (await fetch(`${GARAGE_URL}/${id}`)).json();
   } catch (error) {
     throw new Error(`${error}`);
   }
@@ -30,7 +32,7 @@ const getCar = async (id: number): Promise<Car> => {
 
 const createCar = async (car: { name: string; color: string }): Promise<Car> => {
   try {
-    return (
+    return await (
       await fetch(`${GARAGE_URL}`, {
         method: 'POST',
         headers: {
@@ -46,7 +48,7 @@ const createCar = async (car: { name: string; color: string }): Promise<Car> => 
 
 const deleteCar = async (id: number): Promise<void> => {
   try {
-    return (
+    return await (
       await fetch(`${GARAGE_URL}/${id}`, {
         method: 'DELETE',
       })
@@ -58,7 +60,7 @@ const deleteCar = async (id: number): Promise<void> => {
 
 const updateCar = async (car: Car): Promise<Car> => {
   try {
-    return (
+    return await (
       await fetch(`${GARAGE_URL}/${car.id}`, {
         method: 'PUT',
         headers: {
@@ -105,10 +107,13 @@ const stopEngine = async (id: number): Promise<{ status: number; result: Engine 
 };
 
 /* WINNERS */
-const getWinnersSortOrder = (sort?: string | null, order?: string | null): string => {
-  return sort && order ? `&_sort=${sort}&_order=${order}` : '';
-};
-const getWinners = async (page: number, limit = 10, sort?: string | null, order?: string | null): Promise<Winners> => {
+const getWinnersSortOrder = (sort?: string | null, order?: string | null): string => (sort && order ? `&_sort=${sort}&_order=${order}` : '');
+const getWinners = async (
+  page: number,
+  limit = 10,
+  sort?: string | null,
+  order?: string | null,
+): Promise<Winners> => {
   try {
     const response = await fetch(`${WINNERS_URL}?_page=${page}&_limit=${limit}${getWinnersSortOrder(sort, order)}`);
     const items = await response.json();
@@ -136,7 +141,7 @@ const getWinner = async (id: number): Promise<{ status: number; result: Winner }
 
 const createWinner = async (winner: Winner): Promise<Winner> => {
   try {
-    return (
+    return await (
       await fetch(`${WINNERS_URL}`, {
         method: 'POST',
         headers: {
@@ -152,7 +157,7 @@ const createWinner = async (winner: Winner): Promise<Winner> => {
 
 const deleteWinner = async (id: number): Promise<void> => {
   try {
-    return (
+    return await (
       await fetch(`${WINNERS_URL}/${id}`, {
         method: 'DELETE',
       })
@@ -164,7 +169,7 @@ const deleteWinner = async (id: number): Promise<void> => {
 
 const updateWinner = async (winner: Winner): Promise<Winner> => {
   try {
-    return (
+    return await (
       await fetch(`${WINNERS_URL}/${winner.id}`, {
         method: 'PUT',
         headers: {

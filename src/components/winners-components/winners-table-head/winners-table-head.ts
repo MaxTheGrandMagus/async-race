@@ -4,11 +4,17 @@ export class WinnersTableHead {
   element: HTMLTableRowElement;
 
   idElement: HTMLTableCellElement;
+
   carElement: HTMLTableCellElement;
+
   nameElement: HTMLTableCellElement;
+
   winsElement: HTMLTableCellElement;
+
   winsElementTitle: HTMLSpanElement;
+
   timeElement: HTMLTableCellElement;
+
   timeElementTitle: HTMLSpanElement;
 
   constructor() {

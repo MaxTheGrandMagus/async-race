@@ -2,12 +2,15 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["prettier", "import", "@typescript-eslint"],
   "extends": [
-    "plugin:prettier/recommended",
+    // "plugin:prettier/recommended",
     "prettier",
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-base",
+    "airbnb-typescript/base"
   ],
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
@@ -20,7 +23,12 @@
     "no-debugger": "off",
     "no-console": 0,
     "class-methods-use-this": "off",
-    "@typescript-eslint/no-explicit-any": 2
+    "@typescript-eslint/no-explicit-any": 2,
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["error"],
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/default-param-last": "off",
+    "no-param-reassign":"off"
   },
   "ignorePatterns": ["webpack.config.js", "webpack.dev.config.js", "tsconfig.json"]
 }

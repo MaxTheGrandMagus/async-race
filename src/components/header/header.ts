@@ -5,6 +5,7 @@ export class Header {
   element: HTMLElement;
 
   private readonly garageButton: Button;
+
   private readonly winnersButton: Button;
 
   constructor() {

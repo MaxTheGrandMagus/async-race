@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Form } from '../../base-components/form/form';
 import { Input } from '../../base-components/input/input';
 import { Button } from '../../base-components/button/button';
@@ -7,21 +6,30 @@ import './garage-forms.scss';
 
 export class GarageForms {
   element: HTMLElement;
+
   carState = {
     name: '',
     color: '#ffffff',
   };
 
   createCarForm: Form;
+
   createCarInputName: Input;
+
   createCarInputColor: Input;
+
   createCarButton: Button;
+
   createCar: (car: CreateCar) => void = () => {};
 
   updateCarForm: Form;
+
   updateCarInputName: Input;
+
   updateCarInputColor: Input;
+
   updateCarButton: Button;
+
   updateCar: (car: Car) => void = () => {};
 
   constructor() {
@@ -38,7 +46,7 @@ export class GarageForms {
         { name: 'type', value: 'text' },
         { name: 'placeholder', value: 'Enter car name...' },
         { name: 'required', value: 'true' },
-      ]
+      ],
     );
     this.createCarInputName.getInputValue = (event) => this.updateState('name', event, this.createCarButton.element);
     this.createCarInputColor = new Input(
@@ -48,7 +56,7 @@ export class GarageForms {
         { name: 'name', value: 'color' },
         { name: 'type', value: 'color' },
         { name: 'value', value: '#ffffff' },
-      ]
+      ],
     );
     this.createCarInputColor.getInputValue = (event) => this.updateState('color', event, this.createCarButton.element);
     this.createCarButton = new Button(
@@ -58,12 +66,16 @@ export class GarageForms {
         { name: 'type', value: 'submit' },
         { name: 'disabled', value: '' },
       ],
-      'Create'
+      'Create',
     );
     this.createCarButton.element.onclick = (event) => {
       event.preventDefault();
       this.createCar(this.carState);
-      this.resetForm(this.createCarInputName.element, this.createCarInputColor.element, this.createCarButton.element);
+      this.resetForm(
+        this.createCarInputName.element,
+        this.createCarInputColor.element,
+        this.createCarButton.element,
+      );
     };
     this.appendToParent(this.createCarForm.element, [
       this.createCarInputName.element,
@@ -82,7 +94,7 @@ export class GarageForms {
         { name: 'placeholder', value: 'Enter car name...' },
         { name: 'required', value: 'true' },
         { name: 'disabled', value: '' },
-      ]
+      ],
     );
     this.updateCarInputName.getInputValue = (event) => this.updateState('name', event, this.updateCarButton.element);
     this.updateCarInputColor = new Input(
@@ -93,7 +105,7 @@ export class GarageForms {
         { name: 'type', value: 'color' },
         { name: 'value', value: '#ffffff' },
         { name: 'disabled', value: '' },
-      ]
+      ],
     );
     this.updateCarInputColor.getInputValue = (event) => this.updateState('color', event, this.updateCarButton.element);
     this.updateCarButton = new Button(
@@ -103,12 +115,16 @@ export class GarageForms {
         { name: 'type', value: 'submit' },
         { name: 'disabled', value: '' },
       ],
-      'Update'
+      'Update',
     );
     this.updateCarButton.element.onclick = (event) => {
       event.preventDefault();
       this.updateCar(this.carState);
-      this.resetForm(this.updateCarInputName.element, this.updateCarInputColor.element, this.updateCarButton.element);
+      this.resetForm(
+        this.updateCarInputName.element,
+        this.updateCarInputColor.element,
+        this.updateCarButton.element,
+      );
     };
     this.appendToParent(this.updateCarForm.element, [
       this.updateCarInputName.element,
@@ -126,7 +142,11 @@ export class GarageForms {
     button.toggleAttribute('disabled', this.carState.name === '');
   }
 
-  resetForm(inputName: HTMLInputElement, inputColor: HTMLInputElement, button: HTMLButtonElement): void {
+  resetForm(
+    inputName: HTMLInputElement,
+    inputColor: HTMLInputElement,
+    button: HTMLButtonElement,
+  ): void {
     this.carState = {
       name: '',
       color: '#ffffff',
@@ -134,10 +154,15 @@ export class GarageForms {
     this.updateInputs(inputName, inputColor, button);
   }
 
-  updateInputs(inputName: HTMLInputElement, inputColor: HTMLInputElement, button: HTMLButtonElement): void {
+  updateInputs(
+    inputName: HTMLInputElement,
+    inputColor: HTMLInputElement,
+    button: HTMLButtonElement,
+  ): void {
     inputName.value = this.carState.name;
     inputColor.value = this.carState.color;
-    if (inputName === this.updateCarInputName.element && inputColor === this.updateCarInputColor.element) {
+    if (inputName === this.updateCarInputName.element
+      && inputColor === this.updateCarInputColor.element) {
       this.updateCarInputName.element.setAttribute('disabled', '');
       this.updateCarInputColor.element.setAttribute('disabled', '');
     }

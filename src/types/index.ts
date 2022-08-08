@@ -56,4 +56,7 @@ interface HTMLAttributes {
   value: string;
 }
 
-export { Car, Cars, CreateCar, Winner, Winners, Engine, DriveStatus, RaceWinner, WinnerCar, HTMLAttributes };
+export {
+  Car, Cars, CreateCar, Winner, Winners,
+  Engine, DriveStatus, RaceWinner, WinnerCar, HTMLAttributes,
+};

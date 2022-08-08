@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Button } from '../../base-components/button/button';
 import { startEngine, stopEngine, switchToDrive } from '../../../services/api';
 import { CarImage } from '../../../utils/car-image/car-image';
@@ -9,25 +8,39 @@ export class GarageItem {
   element: HTMLElement;
 
   carControls: HTMLElement;
+
   selectCarButton: Button;
+
   removeCarButton: Button;
+
   carName: HTMLElement;
 
   track: HTMLElement;
+
   trackLaunch: HTMLElement;
+
   trackFinish: HTMLElement;
+
   engineControls: HTMLElement;
+
   carImageWrapper: HTMLElement;
+
   startEngineButton: Button;
+
   stopEngineButton: Button;
 
   public car: Car;
+
   public speed: number;
+
   carAnimation: Animation | undefined;
 
   removeCar: (id: number) => void = () => {};
+
   selectCar: (id: number) => void = () => {};
+
   startEngine: (id: number) => void = () => {};
+
   stopEngine: () => void = () => {};
 
   constructor(car: Car) {
@@ -73,8 +86,14 @@ export class GarageItem {
     this.trackFinish.classList.add('track-finish');
 
     // append to parent
-    this.appendToParent(this.carControls, [this.selectCarButton.element, this.removeCarButton.element, this.carName]);
-    this.appendToParent(this.engineControls, [this.startEngineButton.element, this.stopEngineButton.element]);
+    this.appendToParent(
+      this.carControls,
+      [this.selectCarButton.element, this.removeCarButton.element, this.carName],
+    );
+    this.appendToParent(
+      this.engineControls,
+      [this.startEngineButton.element, this.stopEngineButton.element],
+    );
     this.appendToParent(this.trackLaunch, [this.engineControls, this.carImageWrapper]);
     this.appendToParent(this.track, [this.trackLaunch, this.trackFinish]);
     this.appendToParent(this.element, [this.carControls, this.track]);
@@ -123,7 +142,7 @@ export class GarageItem {
       {
         duration: time,
         easing: 'ease-in-out',
-      }
+      },
     );
     this.carAnimation.play();
     this.carAnimation.onfinish = () => {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Pagination } from '../../pagination/pagination';
 import { GarageItem } from '../garage-item/garage-item';
 import { Cars } from '../../../types';
@@ -6,15 +5,19 @@ import './garage-container.scss';
 
 export class GarageContainer {
   element: HTMLElement;
+
   garageItemList: HTMLElement;
 
   title: HTMLElement;
+
   pagination: Pagination;
 
   cars: Array<GarageItem>;
 
   selectCar: (id: number) => void = () => {};
+
   removeCar: (id: number) => void = () => {};
+
   updatePage: (page: number) => void = () => {};
 
   constructor() {

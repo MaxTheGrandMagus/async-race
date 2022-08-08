@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Button } from '../../base-components/button/button';
 import './garage-controls.scss';
 
@@ -6,11 +5,15 @@ export class GarageControls {
   element: HTMLElement;
 
   raceButton: Button;
+
   resetButton: Button;
+
   generateButton: Button;
 
   raceCars: () => void = () => {};
+
   resetCars: () => void = () => {};
+
   generateCars: () => void = () => {};
 
   constructor() {
@@ -26,7 +29,7 @@ export class GarageControls {
         { name: 'id', value: 'reset-btn' },
         { name: 'disabled', value: '' },
       ],
-      'Reset'
+      'Reset',
     );
     this.resetButton.element.onclick = () => this.resetCars();
 
@@ -34,7 +37,10 @@ export class GarageControls {
     this.generateButton.element.onclick = () => this.generateCars();
 
     // append to parent
-    this.appendToParent(this.element, [this.raceButton.element, this.resetButton.element, this.generateButton.element]);
+    this.appendToParent(
+      this.element,
+      [this.raceButton.element, this.resetButton.element, this.generateButton.element],
+    );
   }
 
   private appendToParent(parentNode: HTMLElement, elements: HTMLElement[]) {

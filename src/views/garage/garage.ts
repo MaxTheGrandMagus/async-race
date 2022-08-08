@@ -15,15 +15,20 @@ import {
   deleteWinner,
 } from '../../services/api';
 import { generateRandomCars } from '../../utils/cars/generate-cars';
-import { Car, CreateCar, RaceWinner, Winner } from '../../types';
+import {
+  Car, CreateCar, RaceWinner, Winner,
+} from '../../types';
 import './garage.scss';
 
 export class Garage {
   element: HTMLElement;
 
   private garageForms: GarageForms;
+
   private garageControls: GarageControls;
+
   private garageContainer: GarageContainer;
+
   private garageWinnerModal: GarageWinnerModal | undefined;
 
   page = 1;
@@ -52,7 +57,11 @@ export class Garage {
     this.garageContainer.selectCar = (id) => this.garageGetCar(id);
     this.garageContainer.removeCar = (id) => this.garageRemoveCar(id);
 
-    this.addToView([this.garageForms.element, this.garageControls.element, this.garageContainer.element]);
+    this.addToView([
+      this.garageForms.element,
+      this.garageControls.element,
+      this.garageContainer.element,
+    ]);
 
     this.garageGetCars(this.page);
   }
@@ -72,7 +81,7 @@ export class Garage {
       this.garageForms.updateInputs(
         this.garageForms.updateCarInputName.element,
         this.garageForms.updateCarInputColor.element,
-        this.garageForms.updateCarButton.element
+        this.garageForms.updateCarButton.element,
       );
       this.garageForms.updateCarInputName.element.removeAttribute('disabled');
       this.garageForms.updateCarInputColor.element.removeAttribute('disabled');
@@ -98,12 +107,13 @@ export class Garage {
   private async garageRaceCars(): Promise<void> {
     this.garageControls.raceButton.element.disabled = true;
     this.garageControls.generateButton.element.disabled = true;
-    const carsRace: Array<Promise<GarageItem>> = this.garageContainer.cars.map(async (garageItem) => {
-      await garageItem.startCarEngine(garageItem.car.id as number);
-      garageItem.startEngineButton.element.disabled = true;
-      garageItem.stopEngineButton.element.disabled = false;
-      return garageItem;
-    });
+    const carsRace: Array<Promise<GarageItem>> = this.garageContainer.cars
+      .map(async (garageItem) => {
+        await garageItem.startCarEngine(garageItem.car.id as number);
+        garageItem.startEngineButton.element.disabled = true;
+        garageItem.stopEngineButton.element.disabled = false;
+        return garageItem;
+      });
     const winner = await Promise.race(carsRace);
     const winnerData: RaceWinner = {
       id: winner.car.id as number,
@@ -164,7 +174,7 @@ export class Garage {
   private async garageCreateOrUpdateWinner(winner: Winner): Promise<void> {
     const getWinnerCar = await getWinner(winner.id);
     if (getWinnerCar.status === 200) {
-      getWinnerCar.result.wins++;
+      getWinnerCar.result.wins += 1;
       winner.wins = getWinnerCar.result.wins;
       await this.garageUpdateWinner(winner);
     } else {

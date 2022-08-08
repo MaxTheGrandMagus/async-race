@@ -17,5 +17,8 @@ const generateRandomCarColor = () => {
   return carColor;
 };
 
-export const generateRandomCars = (carCount = 100): Array<CreateCar> =>
-  new Array(carCount).fill(1).map(() => ({ name: generateRandomCarName(), color: generateRandomCarColor() }));
+export const generateRandomCars = (carCount = 100): Array<CreateCar> => new Array(carCount)
+  .fill(1).map(() => ({
+    name: generateRandomCarName(),
+    color: generateRandomCarColor(),
+  }));

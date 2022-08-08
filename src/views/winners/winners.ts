@@ -6,6 +6,7 @@ export class Winners {
   element: HTMLElement;
 
   winnersContainer: WinnersContainer;
+
   page = 1;
 
   constructor() {

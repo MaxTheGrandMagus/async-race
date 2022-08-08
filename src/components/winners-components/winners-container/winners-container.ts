@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Pagination } from '../../pagination/pagination';
 import { WinnersTableHead } from '../winners-table-head/winners-table-head';
 import { WinnersItem } from '../winners-item/winners-item';
-import { Car, Winner, WinnerCar, Winners } from '../../../types';
+import {
+  Car, Winner, WinnerCar, Winners,
+} from '../../../types';
 import './winners-container.scss';
 import { getCar } from '../../../services/api';
 
@@ -10,13 +11,17 @@ export class WinnersContainer {
   element: HTMLElement;
 
   title: HTMLElement;
+
   pagination: Pagination;
+
   headingRowElement: WinnersTableHead;
+
   tableElement: HTMLTableElement;
 
   winners: Array<Winner> = [];
 
   updatePage: (page: number) => void = () => {};
+
   sortWinners: (type: string, order: string) => void = () => {};
 
   constructor() {
