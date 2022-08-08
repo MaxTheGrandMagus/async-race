@@ -23,6 +23,7 @@ export class GarageItem {
 
   public car: Car;
   public speed: number;
+  carAnimation: Animation | undefined;
 
   removeCar: (id: number) => void = () => {};
   selectCar: (id: number) => void = () => {};
@@ -70,7 +71,6 @@ export class GarageItem {
     };
     this.trackFinish = document.createElement('div');
     this.trackFinish.classList.add('track-finish');
-    this.trackFinish.textContent = '🏁';
 
     // append to parent
     this.appendToParent(this.carControls, [this.selectCarButton.element, this.removeCarButton.element, this.carName]);
@@ -80,40 +80,55 @@ export class GarageItem {
     this.appendToParent(this.element, [this.carControls, this.track]);
   }
 
-  // TODO: Add animation on engine start
   async startCarEngine(id: number): Promise<void> {
     const data = await startEngine(id);
     if (data.status === 200) {
       this.startEngineButton.element.disabled = true;
       this.stopEngineButton.element.disabled = false;
       const { result } = data;
-      // const time = result.distance / result.velocity;
+      const time = result.distance / result.velocity;
+      this.animateCar(time);
       await this.switchToDriveMode(result);
     }
   }
 
-  // TODO: Pause animation on engine break
   private async switchToDriveMode(car: Engine): Promise<void> {
     const data = await switchToDrive(this.car.id as number);
     return new Promise((resolve) => {
-      if (data.status === 500) {
-        console.log('Oops, somthing happened with car');
+      if (data.success === false) {
+        console.log(`${this.car.name} with id:${this.car.id} has been stopped suddenly. It's engine was broken down.`);
+        this.carAnimation?.pause();
       }
-      if (data.status === 200) {
+      if (data.success === true) {
         this.speed = Math.floor(car.distance / car.velocity);
         resolve();
       }
     });
   }
 
-  // TODO: Stop animation on car reach flag
   async stopCarEngine(id: number): Promise<void> {
     const data = await stopEngine(id);
     if (data.status === 200) {
       this.startEngineButton.element.disabled = false;
       this.stopEngineButton.element.disabled = true;
       this.speed = 0;
+      this.carAnimation?.cancel();
+      this.carImageWrapper.style.left = `${this.carImageWrapper.clientWidth}px`;
     }
+  }
+
+  private animateCar(time: number): void {
+    this.carAnimation = this.carImageWrapper.animate(
+      [{ left: '100px' }, { left: `calc(100% - ${this.carImageWrapper.clientWidth}px)` }],
+      {
+        duration: time,
+        easing: 'ease-in-out',
+      }
+    );
+    this.carAnimation.play();
+    this.carAnimation.onfinish = () => {
+      this.carImageWrapper.style.left = `calc(100% - ${this.carImageWrapper.clientWidth}px)`;
+    };
   }
 
   private appendToParent(parentNode: HTMLElement, elements: HTMLElement[]) {

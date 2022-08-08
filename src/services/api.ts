@@ -56,7 +56,7 @@ const deleteCar = async (id: number): Promise<void> => {
   }
 };
 
-const updateCar = async (car: { id?: number; name: string; color: string }): Promise<Car> => {
+const updateCar = async (car: Car): Promise<Car> => {
   try {
     return (
       await fetch(`${GARAGE_URL}/${car.id}`, {
@@ -64,7 +64,7 @@ const updateCar = async (car: { id?: number; name: string; color: string }): Pro
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(car),
+        body: JSON.stringify({ name: car.name, color: car.color }),
       })
     ).json();
   } catch (error) {
@@ -81,24 +81,14 @@ const startEngine = async (id: number): Promise<{ status: number; result: Engine
       status: data.status,
       result: res,
     };
-  } catch (err) {
-    throw new Error(`${err}`);
+  } catch (error) {
+    throw new Error(`${error}`);
   }
 };
 
-const switchToDrive = async (id: number): Promise<{ status: number; success: DriveStatus }> => {
-  try {
-    const data = await fetch(`${ENGINE_URL}?id=${id}&status=drive`, {
-      method: 'PATCH',
-    });
-    const success: DriveStatus = await data.json();
-    return {
-      status: data.status,
-      success: success,
-    };
-  } catch (err) {
-    throw new Error(`${err}`);
-  }
+const switchToDrive = async (id: number): Promise<DriveStatus> => {
+  const data = await fetch(`${ENGINE_URL}?id=${id}&status=drive`, { method: 'PATCH' }).catch();
+  return data.status !== 200 ? { success: false } : { ...(await data.json()) };
 };
 
 const stopEngine = async (id: number): Promise<{ status: number; result: Engine }> => {
@@ -109,8 +99,8 @@ const stopEngine = async (id: number): Promise<{ status: number; result: Engine 
       status: data.status,
       result: res,
     };
-  } catch (err) {
-    throw new Error(`${err}`);
+  } catch (error) {
+    throw new Error(`${error}`);
   }
 };
 
@@ -131,15 +121,20 @@ const getWinners = async (page: number, limit = 10, sort?: string | null, order?
   }
 };
 
-const getWinner = async (id: number): Promise<Winner> => {
+const getWinner = async (id: number): Promise<{ status: number; result: Winner }> => {
   try {
-    return (await fetch(`${WINNERS_URL}/${id}`)).json();
+    const data = await fetch(`${WINNERS_URL}/${id}`);
+    const res: Winner = await data.json();
+    return {
+      status: data.status,
+      result: res,
+    };
   } catch (error) {
     throw new Error(`${error}`);
   }
 };
 
-const createWinner = async (winner: { name: string; color: string }): Promise<Winner> => {
+const createWinner = async (winner: Winner): Promise<Winner> => {
   try {
     return (
       await fetch(`${WINNERS_URL}`, {
@@ -167,15 +162,15 @@ const deleteWinner = async (id: number): Promise<void> => {
   }
 };
 
-const updateWinner = async (id: number, winner: { name: string; color: string }): Promise<Winner> => {
+const updateWinner = async (winner: Winner): Promise<Winner> => {
   try {
     return (
-      await fetch(`${WINNERS_URL}/${id}`, {
+      await fetch(`${WINNERS_URL}/${winner.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(winner),
+        body: JSON.stringify({ wins: winner.wins, time: winner.time }),
       })
     ).json();
   } catch (error) {

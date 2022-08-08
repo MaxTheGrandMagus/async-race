@@ -51,9 +51,7 @@ export class Pagination {
     if (type === 'prev') {
       if (this.page > 1) this.page--;
     }
-
     if (type === 'next') this.page++;
-
     this.title.textContent = `Page #${this.page}`;
     this.updatePage(this.page);
     this.updatePrevButton();

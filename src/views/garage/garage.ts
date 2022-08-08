@@ -1,18 +1,30 @@
 import { GarageForms } from '../../components/garage-components/garage-forms/garage-forms';
 import { GarageControls } from '../../components/garage-components/garage-controls/garage-controls';
 import { GarageContainer } from '../../components/garage-components/garage-container/garage-container';
+import { GarageWinnerModal } from '../../components/garage-components/garage-winner-modal/garage-winner-modal';
 import { GarageItem } from '../../components/garage-components/garage-item/garage-item';
-import { getCars, getCar, createCar, updateCar, deleteCar, deleteWinner } from '../../services/api';
+import {
+  createCar,
+  getCars,
+  getCar,
+  updateCar,
+  deleteCar,
+  createWinner,
+  getWinner,
+  updateWinner,
+  deleteWinner,
+} from '../../services/api';
 import { generateRandomCars } from '../../utils/cars/generate-cars';
-import { Car, CreateCar, RaceWinner } from '../../types';
+import { Car, CreateCar, RaceWinner, Winner } from '../../types';
 import './garage.scss';
 
 export class Garage {
   element: HTMLElement;
 
-  private readonly garageForms: GarageForms;
-  private readonly garageControls: GarageControls;
-  private readonly garageContainer: GarageContainer;
+  private garageForms: GarageForms;
+  private garageControls: GarageControls;
+  private garageContainer: GarageContainer;
+  private garageWinnerModal: GarageWinnerModal | undefined;
 
   page = 1;
 
@@ -48,7 +60,7 @@ export class Garage {
   private async garageGetCars(page: number): Promise<void> {
     const data = await getCars(page);
     if (data) {
-      this.garageContainer.addCars(data);
+      this.garageContainer.renderCars(data);
       this.garageContainer.pagination.updateNextButton(this.page, Number(data.count), 7);
     }
   }
@@ -83,8 +95,6 @@ export class Garage {
     await this.garageGetCars(this.page);
   }
 
-  // TODO: Add popup on winner
-  // TODO: Update winner
   private async garageRaceCars(): Promise<void> {
     this.garageControls.raceButton.element.disabled = true;
     this.garageControls.generateButton.element.disabled = true;
@@ -99,11 +109,19 @@ export class Garage {
       id: winner.car.id as number,
       name: winner.car.name,
       color: winner.car.color,
-      speed: +(winner.speed / 1000).toFixed(2),
+      speed: winner.speed,
       wins: 1,
+      time: +(winner.speed / 1000).toFixed(2),
     };
-    console.log(winnerData);
+    this.garageWinnerModal = new GarageWinnerModal(winnerData);
+    this.element.appendChild(this.garageWinnerModal.element);
     this.garageControls.resetButton.element.removeAttribute('disabled');
+    setTimeout(() => this.garageWinnerModal?.element.remove(), 5000);
+    await this.garageCreateOrUpdateWinner({
+      id: winnerData.id,
+      wins: winnerData.wins,
+      time: winnerData.time,
+    });
   }
 
   private garageResetCars(): void {
@@ -125,6 +143,33 @@ export class Garage {
     await this.garageGetCars(this.page);
     this.garageControls.raceButton.element.disabled = false;
     this.garageControls.generateButton.element.disabled = false;
+  }
+
+  private async garageCreateWinner(winner: Winner) {
+    await createWinner({
+      id: winner.id,
+      wins: 1,
+      time: winner.time,
+    });
+  }
+
+  private async garageUpdateWinner(winner: Winner) {
+    await updateWinner({
+      id: winner.id,
+      wins: winner.wins,
+      time: winner.time,
+    });
+  }
+
+  private async garageCreateOrUpdateWinner(winner: Winner): Promise<void> {
+    const getWinnerCar = await getWinner(winner.id);
+    if (getWinnerCar.status === 200) {
+      getWinnerCar.result.wins++;
+      winner.wins = getWinnerCar.result.wins;
+      await this.garageUpdateWinner(winner);
+    } else {
+      await this.garageCreateWinner(winner);
+    }
   }
 
   private addToView(viewData: HTMLElement[]) {

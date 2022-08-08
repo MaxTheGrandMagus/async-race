@@ -40,12 +40,20 @@ type RaceWinner = {
   color: string;
   speed: number;
   wins: number;
-  time?: number;
+  time: number;
 };
+
+interface WinnerCar {
+  id: number;
+  name: string;
+  color: string;
+  wins: number;
+  time: number;
+}
 
 interface HTMLAttributes {
   name: string;
   value: string;
 }
 
-export { Car, Cars, CreateCar, Winner, Winners, Engine, DriveStatus, RaceWinner, HTMLAttributes };
+export { Car, Cars, CreateCar, Winner, Winners, Engine, DriveStatus, RaceWinner, WinnerCar, HTMLAttributes };

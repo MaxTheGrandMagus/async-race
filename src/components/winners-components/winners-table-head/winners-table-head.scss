@@ -1,0 +1,21 @@
+.winners-table-heading {
+  display: table-row;
+  th {
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: center;
+    .winner-item-arrow {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  .winner-item-id, .winner-item-wins, .winner-item-time {
+    cursor: pointer;
+    span, img {
+      vertical-align: middle;
+    }
+    &:hover {
+      background-color: darken($color: rgba(255,207,139,1), $amount: 25);
+    }
+  }
+}

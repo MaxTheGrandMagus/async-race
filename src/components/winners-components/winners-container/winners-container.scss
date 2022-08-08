@@ -1,0 +1,11 @@
+.winners-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  .winners-table {
+    display: table;
+    th, td {
+      background-color: darken($color: rgba(255,207,139,1), $amount: 15);
+    }
+  }
+}

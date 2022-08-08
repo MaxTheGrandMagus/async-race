@@ -36,7 +36,7 @@ export class GarageContainer {
     this.appendToParent(this.element, [this.title, this.pagination.element, this.garageItemList]);
   }
 
-  addCars(cars: Cars) {
+  renderCars(cars: Cars) {
     this.garageItemList.innerHTML = '';
     this.cars = [];
     this.title.textContent = `Garage (${cars.count})`;
