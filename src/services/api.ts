@@ -1,13 +1,13 @@
 import { Car, Cars, Engine, DriveStatus, Winner, Winners } from '../types';
 
-const BASE_URL = 'localhost:3000';
+const BASE_URL = 'http://localhost:3000';
 
 const GARAGE_URL = `${BASE_URL}/garage`;
 const ENGINE_URL = `${BASE_URL}/engine`;
 const WINNERS_URL = `${BASE_URL}/winners`;
 
 /* GARAGE */
-const getCars = async (page: number, limit = 7): Promise<Cars> => {
+const getCars = async (page = 1, limit = 7): Promise<Cars> => {
   try {
     const response = await fetch(`${GARAGE_URL}?_page=${page}&_limit=${limit}`);
     const items = await response.json();
@@ -56,10 +56,10 @@ const deleteCar = async (id: number): Promise<void> => {
   }
 };
 
-const updateCar = async (id: number, car: { name: string; color: string }): Promise<Car> => {
+const updateCar = async (car: { id?: number; name: string; color: string }): Promise<Car> => {
   try {
     return (
-      await fetch(`${GARAGE_URL}/${id}`, {
+      await fetch(`${GARAGE_URL}/${car.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -73,37 +73,42 @@ const updateCar = async (id: number, car: { name: string; color: string }): Prom
 };
 
 /* ENGINE */
-const startEngine = async (id: number): Promise<Engine> => {
+const startEngine = async (id: number): Promise<{ status: number; result: Engine }> => {
   try {
-    return (
-      await fetch(`${ENGINE_URL}?id=${id}&status=started`, {
-        method: 'PATCH',
-      })
-    ).json();
+    const data = await fetch(`${ENGINE_URL}?id=${id}&status=started`, { method: 'PATCH' });
+    const res: Engine = await data.json();
+    return {
+      status: data.status,
+      result: res,
+    };
   } catch (err) {
     throw new Error(`${err}`);
   }
 };
 
-const switchToDrive = async (id: number): Promise<DriveStatus> => {
+const switchToDrive = async (id: number): Promise<{ status: number; success: DriveStatus }> => {
   try {
-    return (
-      await fetch(`${ENGINE_URL}?id=${id}&status=drive`, {
-        method: 'PATCH',
-      })
-    ).json();
+    const data = await fetch(`${ENGINE_URL}?id=${id}&status=drive`, {
+      method: 'PATCH',
+    });
+    const success: DriveStatus = await data.json();
+    return {
+      status: data.status,
+      success: success,
+    };
   } catch (err) {
     throw new Error(`${err}`);
   }
 };
 
-const stopEngine = async (id: number): Promise<Engine> => {
+const stopEngine = async (id: number): Promise<{ status: number; result: Engine }> => {
   try {
-    return (
-      await fetch(`${ENGINE_URL}?id=${id}&status=stopped`, {
-        method: 'PATCH',
-      })
-    ).json();
+    const data = await fetch(`${ENGINE_URL}?id=${id}&status=stopped`, { method: 'PATCH' });
+    const res: Engine = await data.json();
+    return {
+      status: data.status,
+      result: res,
+    };
   } catch (err) {
     throw new Error(`${err}`);
   }

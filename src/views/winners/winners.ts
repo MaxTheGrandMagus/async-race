@@ -1,14 +1,14 @@
-import { View } from './../../components/view/view';
+import './winners.scss';
 
 export class Winners {
   element: HTMLElement;
 
-  private readonly view: View;
-
   constructor() {
     this.element = document.createElement('div');
     this.element.classList.add('winners-view');
+  }
 
-    this.view = new View();
+  private addToView(viewData: HTMLElement[]) {
+    viewData.forEach((viewElement) => this.element.appendChild(viewElement));
   }
 }

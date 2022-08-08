@@ -1,0 +1,35 @@
+.garage-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  span {
+    font-size: 16px;
+  }
+  .car-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .track {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: dashed #fff 4px;
+    &-launch {
+      display: flex;
+      flex-direction: row;
+      .engine-controls {
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+        margin-right: 1rem;
+      }
+    }
+    &-finish {
+      font-size: 1.5em;
+    }
+  }
+}
