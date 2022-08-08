@@ -1,6 +1,6 @@
 import { Car, Cars, Engine, DriveStatus, Winner, Winners } from '../types';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://127.0.0.1:3000';
 
 const GARAGE_URL = `${BASE_URL}/garage`;
 const ENGINE_URL = `${BASE_URL}/engine`;
