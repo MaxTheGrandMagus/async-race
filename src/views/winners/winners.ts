@@ -13,8 +13,6 @@ export class Winners {
     this.element = document.createElement('div');
     this.element.classList.add('winners-view');
 
-    this.winnersGetWinners();
-
     this.winnersContainer = new WinnersContainer();
     this.winnersContainer.updatePage = (page: number) => {
       this.page = page;
@@ -25,12 +23,14 @@ export class Winners {
     };
 
     this.addToView([this.winnersContainer.element]);
+
+    this.winnersGetWinners();
   }
 
-  private async winnersGetWinners(page = 0, limit = 10, sort = 'id', order = 'ASC'): Promise<void> {
+  async winnersGetWinners(page = 1, limit = 10, sort = 'id', order = 'ASC'): Promise<void> {
     const winners = await getWinners(page, limit, sort, order);
-    this.winnersContainer.pagination.updateNextButton(this.page, Number(winners.count), 10);
     this.winnersContainer.renderWinners(winners);
+    this.winnersContainer.pagination.updateNextButton(this.page, Number(winners.count), 10);
   }
 
   private addToView(viewData: HTMLElement[]) {

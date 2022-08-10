@@ -19,6 +19,7 @@ import {
   Car, CreateCar, RaceWinner, Winner,
 } from '../../types';
 import './garage.scss';
+import { Winners } from '../winners/winners';
 
 export class Garage {
   element: HTMLElement;
@@ -32,6 +33,8 @@ export class Garage {
   private garageWinnerModal: GarageWinnerModal | undefined;
 
   page = 1;
+
+  winners = new Winners();
 
   constructor() {
     this.element = document.createElement('div');
@@ -180,6 +183,9 @@ export class Garage {
     } else {
       await this.garageCreateWinner(winner);
     }
+    const winnersView = document.querySelector('.winners-view') as HTMLElement;
+    this.winners.winnersGetWinners();
+    (winnersView.parentNode as HTMLElement).replaceChild(this.winners.element, winnersView);
   }
 
   private addToView(viewData: HTMLElement[]) {

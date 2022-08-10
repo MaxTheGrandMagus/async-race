@@ -109,7 +109,7 @@ const stopEngine = async (id: number): Promise<{ status: number; result: Engine 
 /* WINNERS */
 const getWinnersSortOrder = (sort?: string | null, order?: string | null): string => (sort && order ? `&_sort=${sort}&_order=${order}` : '');
 const getWinners = async (
-  page: number,
+  page = 1,
   limit = 10,
   sort?: string | null,
   order?: string | null,
