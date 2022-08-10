@@ -105,6 +105,9 @@ export class Garage {
     await deleteCar(id);
     await deleteWinner(id);
     await this.garageGetCars(this.page);
+    const winnersView = document.querySelector('.winners-view') as HTMLElement;
+    await this.winners.winnersGetWinners();
+    (winnersView.parentNode as HTMLElement).replaceChild(this.winners.element, winnersView);
   }
 
   private async garageRaceCars(): Promise<void> {
@@ -184,7 +187,7 @@ export class Garage {
       await this.garageCreateWinner(winner);
     }
     const winnersView = document.querySelector('.winners-view') as HTMLElement;
-    this.winners.winnersGetWinners();
+    await this.winners.winnersGetWinners();
     (winnersView.parentNode as HTMLElement).replaceChild(this.winners.element, winnersView);
   }
 
